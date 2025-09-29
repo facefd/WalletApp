@@ -1,24 +1,20 @@
 ﻿// WalletApp.h
 #pragma once
-
 #define _CRT_SECURE_NO_WARNINGS
 #include <windows.h>
 #include <vector>
 #include <string>
 #include <ctime>
-#include <iomanip>
 #include "sqlite3.h"
 
-#pragma comment(linker, "-mwindows")
+#pragma comment(lib, "comctl32.lib")
 
-// Перечисление ролей пользователя
 enum class UserRole { None, User, Admin };
 
-// Структура транзакции
 struct Transaction {
     double amount;
     std::wstring description;
-    std::time_t timestamp;
+    time_t timestamp;
 };
 
 // Глобальные переменные
@@ -29,35 +25,35 @@ extern UserRole currentUserRole;
 extern std::wstring currentUserName;
 extern sqlite3* g_db;
 
-// Глобальные дескрипторы элементов интерфейса
+// GUI дескрипторы
 extern HWND hBalanceLabel;
-extern HWND hIncomeEdit;
-extern HWND hIncomeDesc;
-extern HWND hExpenseEdit;
-extern HWND hExpenseDesc;
-extern HWND hHistoryList;
-extern HWND hAddIncomeButton;
-extern HWND hAddExpenseButton;
-extern HWND hLoginButton;
-extern HWND hLoginEdit;
-extern HWND hPasswordEdit;
-extern HWND hLoginStatus;
+extern HWND hIncomeEdit, hIncomeDesc, hExpenseEdit, hExpenseDesc, hHistoryList;
+extern HWND hAddIncomeButton, hAddExpenseButton;
+extern HWND hLoginButton, hLoginEdit, hPasswordEdit, hLoginStatus;
+extern HWND hRegisterWindow;
+extern HWND hRegLoginEdit, hRegPassEdit, hRegConfirmEdit, hRegRoleCombo, hRegStatusLabel;
 
-// Прототипы функций
+// Утилиты
 std::wstring getCurrentTime();
+std::string wstr_to_utf8(const std::wstring& wstr);
+std::wstring utf8_to_wstr(const std::string& str);
+
+// Функции данных
 void LoadData();
 void SaveIncome(const Transaction& t);
 void SaveExpense(const Transaction& t);
 void SaveBalance();
 bool CheckUserLogin(const std::wstring& login, const std::wstring& password, UserRole* role);
+
+// GUI функции
 void UpdateUI(HWND hwnd);
 void AddIncome(HWND hwnd);
 void AddExpense(HWND hwnd);
-
-// Функции отображения окон
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void ShowMainWindow(HINSTANCE hInstance);
+
+LRESULT CALLBACK LoginWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void ShowLoginWindow(HINSTANCE hInstance);
 
-// Объявления оконных процедур
-LRESULT CALLBACK LoginWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK RegistrationWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+void ShowRegistrationWindow(HINSTANCE hInstance);
