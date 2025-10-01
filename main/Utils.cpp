@@ -1,17 +1,8 @@
-// Utils.cpp
-// Utils.cpp
+ï»¿// Utils.cpp
 #include "WalletApp.h"
 #include <cstdlib>
-#include <ctime>
+#include <codecvt>
 
-std::string generateCode() {
-    static bool seeded = false;
-    if (!seeded) {
-        srand(static_cast<unsigned>(time(nullptr)));
-        seeded = true;
-    }
-    return std::to_string(100000 + rand() % 900000); // 6 öèôğ
-}
 std::wstring getCurrentTime() {
     std::time_t now = std::time(nullptr);
     tm t;
@@ -37,22 +28,33 @@ std::wstring utf8_to_wstr(const std::string& str) {
     return wstr;
 }
 
-bool sendVerificationEmail(const std::wstring& toEmail, const std::string& code) {
-    std::string to = wstr_to_utf8(toEmail);
+std::string generateCode() {
+    static bool seeded = false;
+    if (!seeded) {
+        srand(static_cast<unsigned>(time(nullptr)));
+        seeded = true;
+    }
+    return std::to_string(100000 + rand() % 900000);
+}
 
-    // ?? ÇÀÌÅÍÈÒÅ ÍÀ ÑÂÎÉ EMAIL È APP PASSWORD
-    std::string from = "face_shot@mail.ru";
-    std::string appPassword = "pygc gzne wjdf sltt"; // 16 ñèìâîëîâ îò Google
-
-    std::string subject = "Êîä ïîäòâåğæäåíèÿ";
-    std::string body = "Âàø êîä: " + code;
+bool sendVerificationEmail(const std::wstring& toEmailW, const std::string& code) {
+    std::string to = wstr_to_utf8(toEmailW);
+    std::string from = "face_shot@mail.ru";           // â† Ğ—Ğ°Ğ¼ĞµĞ½Ğ¸Ñ‚Ğµ
+    std::string password = "pygc gzne wjdf sltt";     // â† App Password
 
     std::string cmd =
         "powershell -command \""
-        "$pwd = ConvertTo-SecureString '" + appPassword + "' -AsPlainText -Force; "
+        "$pwd = ConvertTo-SecureString '" + password + "' -AsPlainText -Force; "
         "$cred = New-Object System.Management.Automation.PSCredential('" + from + "', $pwd); "
-        "Send-MailMessage -SmtpServer 'smtp.gmail.com' -Port 587 -UseSsl "
-        "-From '" + from + "' -To '" + to + "' -Subject '" + subject + "' -Body '" + body + "' -Credential $cred\"";
+        "Send-MailMessage "
+        "-SmtpServer 'smtp.gmail.com' "
+        "-Port 587 "
+        "-UseSsl "
+        "-From '" + from + "' "
+        "-To '" + to + "' "
+        "-Subject 'ĞšĞ¾Ğ´ Ğ¿Ğ¾Ğ´Ñ‚Ğ²ĞµÑ€Ğ¶Ğ´ĞµĞ½Ğ¸Ñ' "
+        "-Body 'Ğ’Ğ°Ñˆ ĞºĞ¾Ğ´: " + code + "' "
+        "-Credential $cred\"";
 
     int result = system(cmd.c_str());
     return result == 0;

@@ -31,10 +31,8 @@ extern HWND hIncomeEdit, hIncomeDesc, hExpenseEdit, hExpenseDesc, hHistoryList;
 extern HWND hAddIncomeButton, hAddExpenseButton;
 extern HWND hLoginButton, hLoginEdit, hPasswordEdit, hLoginStatus;
 extern HWND hRegisterWindow;
-extern HWND hRegLoginEdit, hRegPassEdit, hRegConfirmEdit, hRegEmailEdit, hRegStatusLabel;
+extern HWND hRegLoginEdit, hRegPassEdit, hRegConfirmEdit, hRegEmailEdit, hRegRoleCombo, hRegStatusLabel;
 extern HWND hVerifyCodeEdit;
-extern HWND hRegEmailEdit;
-extern HWND hRegRoleCombo;
 
 // Утилиты
 std::wstring getCurrentTime();
@@ -50,6 +48,7 @@ void SaveExpense(const Transaction& t);
 void SaveBalance();
 bool CheckUserLogin(const std::wstring& login, const std::wstring& password, UserRole* role);
 
+
 // GUI функции
 void UpdateUI(HWND hwnd);
 void AddIncome(HWND hwnd);
@@ -61,7 +60,8 @@ LRESULT CALLBACK LoginWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 void ShowLoginWindow(HINSTANCE hInstance);
 
 LRESULT CALLBACK RegistrationWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-void ShowRegistrationWindow(HINSTANCE hInstance);
+// WalletApp.h
+void ShowRegistrationWindow(HINSTANCE hInstance);  // <-- Должно быть!
 
 LRESULT CALLBACK VerificationWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 void ShowVerificationWindow(HINSTANCE hInstance, const wchar_t* login, const wchar_t* password, const wchar_t* email, const std::string& code);

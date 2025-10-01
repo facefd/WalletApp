@@ -1,9 +1,5 @@
 // VerificationWindow.cpp
-#define _CRT_SECURE_NO_WARNINGS
 #include "WalletApp.h"
-#include <string>
-
-HWND hVerifyCodeEdit = nullptr;
 
 LRESULT CALLBACK VerificationWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     static std::wstring v_login, v_pass, v_email;

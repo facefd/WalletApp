@@ -1,6 +1,7 @@
 ﻿// main.cpp
 #include "WalletApp.h"
 
+// Определение глобальных переменных
 std::vector<Transaction> incomes;
 std::vector<Transaction> expenses;
 double balance = 0.0;
@@ -15,11 +16,8 @@ HWND hHistoryList = nullptr;
 HWND hAddIncomeButton = nullptr, hAddExpenseButton = nullptr;
 HWND hLoginButton = nullptr, hLoginEdit = nullptr, hPasswordEdit = nullptr, hLoginStatus = nullptr;
 HWND hRegisterWindow = nullptr;
-HWND hRegLoginEdit = nullptr, hRegPassEdit = nullptr, hRegConfirmEdit = nullptr, hRegEmailEdit = nullptr, hRegStatusLabel = nullptr;
-HWND hVerifyCodeEdit = nullptr;
-HWND hRegRoleCombo = nullptr;
-
-
+HWND hRegLoginEdit = nullptr, hRegPassEdit = nullptr, hRegConfirmEdit = nullptr, hRegEmailEdit = nullptr, hRegRoleCombo = nullptr, hRegStatusLabel = nullptr;
+HWND hVerifyCodeEdit = nullptr; // ← Единственное определение!
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int) {
     if (sqlite3_open("wallet.db", &g_db) != SQLITE_OK) {
