@@ -1,6 +1,7 @@
 // LoginWindow.cpp
 #include "WalletApp.h"
 
+
 LRESULT CALLBACK LoginWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
     case WM_CREATE: {

@@ -1,7 +1,6 @@
 ﻿// main.cpp
 #include "WalletApp.h"
 
-// Определение глобальных переменных
 std::vector<Transaction> incomes;
 std::vector<Transaction> expenses;
 double balance = 0.0;
@@ -16,7 +15,11 @@ HWND hHistoryList = nullptr;
 HWND hAddIncomeButton = nullptr, hAddExpenseButton = nullptr;
 HWND hLoginButton = nullptr, hLoginEdit = nullptr, hPasswordEdit = nullptr, hLoginStatus = nullptr;
 HWND hRegisterWindow = nullptr;
-HWND hRegLoginEdit = nullptr, hRegPassEdit = nullptr, hRegConfirmEdit = nullptr, hRegRoleCombo = nullptr, hRegStatusLabel = nullptr;
+HWND hRegLoginEdit = nullptr, hRegPassEdit = nullptr, hRegConfirmEdit = nullptr, hRegEmailEdit = nullptr, hRegStatusLabel = nullptr;
+HWND hVerifyCodeEdit = nullptr;
+HWND hRegRoleCombo = nullptr;
+
+
 
 int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _In_ int) {
     if (sqlite3_open("wallet.db", &g_db) != SQLITE_OK) {
@@ -29,7 +32,8 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ PWSTR, _I
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "login TEXT UNIQUE NOT NULL, "
         "password TEXT NOT NULL, "
-        "role TEXT NOT NULL CHECK(role IN ('admin', 'user'))"
+        "role TEXT NOT NULL CHECK(role IN ('admin', 'user')), "
+        "email TEXT"
         ");";
 
     const char* create_incomes =

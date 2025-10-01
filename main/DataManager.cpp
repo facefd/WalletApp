@@ -31,7 +31,7 @@ void LoadData() {
 
 void SaveIncome(const Transaction& t) {
     sqlite3_stmt* stmt;
-    const char* sql = "INSERT INTO incomes (amount, description, timestamp) VALUES (?, ?, ?);";
+    const char* sql = "INSERT INTO incomes (amount, description, timestamp) VALUES (?, ?, ?)";
     if (sqlite3_prepare_v2(g_db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
         sqlite3_bind_double(stmt, 1, t.amount);
         std::string utf8_desc = wstr_to_utf8(t.description);
@@ -44,7 +44,7 @@ void SaveIncome(const Transaction& t) {
 
 void SaveExpense(const Transaction& t) {
     sqlite3_stmt* stmt;
-    const char* sql = "INSERT INTO expenses (amount, description, timestamp) VALUES (?, ?, ?);";
+    const char* sql = "INSERT INTO expenses (amount, description, timestamp) VALUES (?, ?, ?)";
     if (sqlite3_prepare_v2(g_db, sql, -1, &stmt, nullptr) == SQLITE_OK) {
         sqlite3_bind_double(stmt, 1, t.amount);
         std::string utf8_desc = wstr_to_utf8(t.description);
